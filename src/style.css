@@ -1,0 +1,37 @@
+:root {
+  --red: #ae0000;
+}
+
+.container {
+  min-width: 1200px;
+}
+.content {
+  margin: 80px auto;
+  width: 45%;
+}
+
+.secondary-info {
+  color: var(--bs-gray-600);
+}
+
+.degree-sign {
+  position: relative;
+  top: -1.5rem;
+}
+
+.degree-sign a {
+  text-decoration: none;
+}
+
+.weather li {
+  list-style: none;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.error {
+  color: var(--red);
+}
