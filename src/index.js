@@ -63,7 +63,7 @@ function showTemperature(response) {
   document.querySelector("#date").innerHTML = formatDate(dt * 1000);
   iconElement.setAttribute(
     "src",
-    `http://openweathermap.org/img/wn/${icon}@2x.png`
+    `https://openweathermap.org/img/wn/${icon}@2x.png`
   );
   iconElement.setAttribute("alt", description);
 }
