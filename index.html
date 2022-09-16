@@ -29,8 +29,11 @@
                 class="form-control"
                 id="location-input"
                 placeholder="Location"
+                autocomplete="off"
               />
-              <span id="error" class="error invisible">Location does not exist</span>
+              <span id="error" class="error invisible"
+                >Location does not exist</span
+              >
             </div>
             <div class="col-2">
               <button type="submit" class="btn btn-primary">Search</button>
@@ -45,29 +48,35 @@
               </button>
             </div>
           </form>
-          <div class="row pt-2 weather">
-            <div class="col-4">
-              <div class="d-inline-block fs-1" id="main-icon">🌤️</div>
-              <h2 class="fs-1 d-inline-block celsius" id="temperature">23</h2>
-              <div class="d-inline-block degree-sign" id="temperature-scale">
-                <a href="#" class="active" id="celsius">°C</a> | 
-                <a href="#" class="fahrenheit disabled" id="fahrengeit">°F</a></span>
+          <div class="row weather-now">
+            <div class="col-5 d-flex">
+              <img src="" alt="" id="icon" />
+              <div>
+                <span id="temperature" class="temperature"></span>
+                <div class="scale">
+                  <a href="#" class="disabled text-decoration-none" id="celsius"
+                    >°C</a
+                  >
+                  |
+                  <a
+                    href="#"
+                    class="fahrenheit text-decoration-none"
+                    id="fahrengeit"
+                    >°F</a
+                  >
+                </div>
               </div>
             </div>
-            <ul class="col-4">
-              <li class="secondary-info">
-                Humidity: <span id="humidity">10</span>%
-              </li>
-              <li class="secondary-info">
-                Wind: <span id="wind">15</span>km/h
-              </li>
-              <li class="secondary-info" id="weather-description">
-                Partly cloudy
-              </li>
+            <ul class="col-3">
+              <li>Humidity: <span id="humidity"></span>%</li>
+              <li>Wind: <span id="wind"></span>km/h</li>
             </ul>
             <div class="col-4">
-              <h2 id="location-text">Dnipro</h2>
-              <div class="secondary-info" id="date">Friday 16:00</div>
+              <h1 id="city"></h1>
+              <ul>
+                <li id="date"></li>
+                <li id="weather-description"></li>
+              </ul>
             </div>
           </div>
           <div class="row pt-3">

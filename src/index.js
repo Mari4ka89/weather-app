@@ -1,5 +1,3 @@
-const apiKey = "6b24516d286b8dbb432adef9e9789e67";
-
 function formatTime(time) {
   if (time < 10) {
     time = `0${time}`;
@@ -48,17 +46,25 @@ function showTemperature(response) {
       wind: { speed },
     },
   } = response;
+  const { icon, main, description } = weather[0];
+  let iconElement = document.querySelector("#icon");
 
-  document.querySelector("#location-text").innerHTML = name;
+  document.querySelector("#city").innerHTML = name;
   document.querySelector("#temperature").innerHTML = Math.round(temp);
-  document.querySelector("#weather-description").innerHTML = weather[0].main;
+  document.querySelector("#weather-description").innerHTML = main;
   document.querySelector("#humidity").innerHTML = humidity;
   document.querySelector("#wind").innerHTML = Math.round(speed);
   document.querySelector("#date").innerHTML = formatDate(dt * 1000);
+  iconElement.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${icon}@2x.png`
+  );
+  iconElement.setAttribute("alt", description);
 }
 
 const getWeatherData = (urlFunc, params) => {
   const apiUrl = urlFunc(params);
+  const apiKey = "6b24516d286b8dbb432adef9e9789e67";
 
   axios
     .get(`${apiUrl}&appid=${apiKey}`)
@@ -81,9 +87,10 @@ function submitLocationForm(event) {
   }
 }
 
-function displayCurrentLocationWeather() {
+const displayCurrentLocationWeather = () =>
   navigator.geolocation.getCurrentPosition(getCurrentLocationCoords);
-}
+
+getWeatherData(buildUrlByCityName, "Dnipro");
 
 document
   .querySelector("#search-form")
