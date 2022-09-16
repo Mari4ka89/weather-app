@@ -54,6 +54,7 @@ function showTemperature(response) {
   let iconElement = document.querySelector("#icon");
 
   celsiusValue = temp;
+  addRemoveClass(celsiusLink, fahrenheitLink);
   document.querySelector("#city").innerHTML = name;
   document.querySelector("#temperature").innerHTML = Math.round(temp);
   document.querySelector("#weather-description").innerHTML = main;
