@@ -39,9 +39,10 @@ li {
   font-size: 68px;
 }
 
-.disabled {
+.active {
   pointer-events: none;
   cursor: default;
+  color: var(--bs-card-color);
 }
 
 .error {
@@ -50,7 +51,6 @@ li {
 
 .scale {
   position: relative;
-  display: inline-block;
   top: -38px;
   left: -5px;
 }

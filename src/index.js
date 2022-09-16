@@ -1,3 +1,7 @@
+let celsiusValue = null;
+let celsiusLink = document.querySelector("#celsius");
+let fahrenheitLink = document.querySelector("#fahrenheit");
+
 function formatTime(time) {
   if (time < 10) {
     time = `0${time}`;
@@ -49,6 +53,7 @@ function showTemperature(response) {
   const { icon, main, description } = weather[0];
   let iconElement = document.querySelector("#icon");
 
+  celsiusValue = temp;
   document.querySelector("#city").innerHTML = name;
   document.querySelector("#temperature").innerHTML = Math.round(temp);
   document.querySelector("#weather-description").innerHTML = main;
@@ -90,6 +95,27 @@ function submitLocationForm(event) {
 const displayCurrentLocationWeather = () =>
   navigator.geolocation.getCurrentPosition(getCurrentLocationCoords);
 
+const calculateFahrenheitTemperature = (value) => (value * 9) / 5 + 32;
+
+const addRemoveClass = (addSelector, removeSelector) => {
+  addSelector.classList.add("active");
+  removeSelector.classList.remove("active");
+};
+
+const handleCelciusClick = (event) => {
+  event.preventDefault();
+  document.querySelector("#temperature").innerHTML = Math.round(celsiusValue);
+  addRemoveClass(celsiusLink, fahrenheitLink);
+};
+
+const handleFahrenheitClick = (event) => {
+  event.preventDefault();
+  document.querySelector("#temperature").innerHTML = Math.round(
+    calculateFahrenheitTemperature(celsiusValue)
+  );
+  addRemoveClass(fahrenheitLink, celsiusLink);
+};
+
 getWeatherData(buildUrlByCityName, "Dnipro");
 
 document
@@ -99,3 +125,6 @@ document
 document
   .querySelector("#location-button")
   .addEventListener("click", displayCurrentLocationWeather);
+
+celsiusLink.addEventListener("click", handleCelciusClick);
+fahrenheitLink.addEventListener("click", handleFahrenheitClick);
