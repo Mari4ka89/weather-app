@@ -11,7 +11,7 @@ function formatTime(time) {
 }
 
 function formatDate(timestamp) {
-  let week = [
+  const days = [
     "Sunday",
     "Monday",
     "Tuesday",
@@ -25,8 +25,16 @@ function formatDate(timestamp) {
   let hours = formatTime(date.getHours());
   let minutes = formatTime(date.getMinutes());
 
-  return `${week[dayNumber]} ${hours}:${minutes}`;
+  return `${days[dayNumber]} ${hours}:${minutes}`;
 }
+
+const formatForecastDay = (timestamp) => {
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let date = new Date(timestamp);
+  let dayNumber = date.getDay();
+
+  return days[dayNumber];
+};
 
 document.querySelector("#date").innerHTML = formatDate(new Date());
 
@@ -35,18 +43,54 @@ const buildUrlByCityName = (city) =>
 const buildUrlByCoords = ({ lat, lon }) =>
   `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric`;
 
+const addApiKeyToUrl = (apiUrl, apiKey) => `${apiUrl}&appid=${apiKey}`;
+
 const showIncorrectLocationMessage = () => {
   document.querySelector("#error").classList.add("visible");
   document.querySelector("#error").classList.remove("invisible");
 };
 
+const displayForecast = ({ data: { daily } }) => {
+  let forecastLayout = "";
+
+  daily.slice(0, 6).forEach(({ dt, weather, temp: { max, min } }) => {
+    const { icon, description } = weather[0];
+
+    forecastLayout += `<div class="col-2">
+      <div class="text-center text-uppercase">${formatForecastDay(
+        dt * 1000
+      )}</div>
+      <img
+        class="d-block"
+        src="http://openweathermap.org/img/wn/${icon}@2x.png"
+        alt=${description}
+      />
+      <div class="text-center">
+        <span class="fw-bold">${Math.round(max)}°</span> 
+        <span>${Math.round(min)}°</span>
+      </div>
+    </div>`;
+  });
+
+  document.querySelector("#forecast").innerHTML = forecastLayout;
+};
+
+const getWeatherForecast = ({ lat, lon }) => {
+  const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&units=metric`;
+  const apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+
+  axios.get(addApiKeyToUrl(apiUrl, apiKey)).then(displayForecast);
+};
+
 function showTemperature(response) {
+  console.log("response.data", response.data);
   const {
     data: {
       main: { temp, humidity },
       name,
       weather,
       dt,
+      coord,
       wind: { speed },
     },
   } = response;
@@ -66,14 +110,15 @@ function showTemperature(response) {
     `https://openweathermap.org/img/wn/${icon}@2x.png`
   );
   iconElement.setAttribute("alt", description);
+
+  getWeatherForecast(coord);
 }
 
 const getWeatherData = (urlFunc, params) => {
-  const apiUrl = urlFunc(params);
   const apiKey = "6b24516d286b8dbb432adef9e9789e67";
 
   axios
-    .get(`${apiUrl}&appid=${apiKey}`)
+    .get(addApiKeyToUrl(urlFunc(params), apiKey))
     .then(showTemperature)
     .catch((error) => {
       showIncorrectLocationMessage();
