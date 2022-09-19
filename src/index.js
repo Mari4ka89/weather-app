@@ -83,7 +83,6 @@ const getWeatherForecast = ({ lat, lon }) => {
 };
 
 function showTemperature(response) {
-  console.log("response.data", response.data);
   const {
     data: {
       main: { temp, humidity },
