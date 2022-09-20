@@ -73,7 +73,7 @@ const displayForecast = ({ data: { daily } }) => {
 
 const getWeatherForecast = ({ lat, lon }) => {
   const apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric`;
-  const apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+  const apiKey = "3bc520cc14bbdedfd7e45158f2ef0439";
 
   axios.get(addApiKeyToUrl(apiUrl, apiKey)).then(displayForecast);
 };
@@ -108,7 +108,7 @@ function showTemperature(response) {
 }
 
 const getWeatherData = (urlFunc, params) => {
-  const apiKey = "6b24516d286b8dbb432adef9e9789e67";
+  const apiKey = "3bc520cc14bbdedfd7e45158f2ef0439";
 
   axios
     .get(addApiKeyToUrl(urlFunc(params), apiKey))
