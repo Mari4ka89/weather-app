@@ -39,12 +39,6 @@ li {
   font-size: 68px;
 }
 
-.active {
-  pointer-events: none;
-  cursor: default;
-  color: var(--bs-card-color);
-}
-
 .error {
   color: var(--red);
 }
